@@ -9,7 +9,6 @@ data "spotify_track" "lazy_songs" {
 }
 
 resource "spotify_playlist" "the-lazy-playlist" {
-  for_each    = data.spotify_track.lazy_songs
   name        = "The other lazy playlist"
   description = "A lazy playlist only managed (or abandoned) by Terraform"
   public      = true # So brave, isn't?
