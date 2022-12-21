@@ -45,14 +45,14 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
+      continue-on-error: true
       run: terraform plan -input=false
 
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply
+    # - name: Terraform Apply
+    #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #   run: terraform apply
 
     - name: Write outputs
-      if: always()
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
       run: |
@@ -64,11 +64,11 @@ jobs:
 
         <details><summary>Show Plan</summary>
 
-        ${process.env.PLAN}
+        ${PLAN}
 
         </details>
 
-        *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}*
+        *Pushed by: @${{ github.actor }}, Action: ${ GITHUB_EVENT_NAME }*
         EOF
         )
 

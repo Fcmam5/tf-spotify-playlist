@@ -1,5 +1,5 @@
 locals {
-  song_urls = [for song in var.songs : song.url]
+  song_urls = var.songs[*].url
   song_ids  = [for song in data.spotify_track.lazy_songs : song.id]
 }
 
