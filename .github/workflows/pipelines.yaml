@@ -5,7 +5,8 @@ on:
     branches:
     - "main"
   pull_request:
-  workflow_run:
+  workflow_dispatch:
+    
     
 permissions:
   contents: read
@@ -51,6 +52,7 @@ jobs:
       run: terraform apply
 
     - name: Write outputs
+      if: always()
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
       run: |
